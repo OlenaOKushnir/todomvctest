@@ -34,7 +34,6 @@ public class TodosE2ETest extends BaseTest {
         assertTasksAre("b");
 
         clearCompleted();
-        assertNoTasks();
 
         switchToAll();
 
