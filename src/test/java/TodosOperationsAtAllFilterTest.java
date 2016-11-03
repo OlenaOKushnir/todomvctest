@@ -33,11 +33,20 @@ public class TodosOperationsAtAllFilterTest extends BaseTest {
     }
 
     @Test
+    public void testClearCompleted() {
+        givenAtAll(COMPLETED, "a");
+
+        clearCompleted();
+        assertNoTasks();
+    }
+
+    @Test
     public void testReopen() {
         givenAtAll(COMPLETED, "a");
 
         toggle("a");
         assertTasksAre("a");
+        assertItemsLeft(1);
     }
 
     @Test
