@@ -16,8 +16,7 @@ public class TodosE2ETest extends BaseTest {
         assertTasksAre("a");
 
         switchToActive();
-
-        assertNoTasks();
+        
         add("b");
         assertTasksAre("b");
 
@@ -39,6 +38,5 @@ public class TodosE2ETest extends BaseTest {
         assertTasksAre("a");
 
         delete("a");
-        assertNoTasks();
     }
 }
