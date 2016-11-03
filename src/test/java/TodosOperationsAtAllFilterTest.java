@@ -31,7 +31,7 @@ public class TodosOperationsAtAllFilterTest extends BaseTest {
 
         toggleAll();
         assertTasksAre("a");
-        assertItemsLeft(1);
+        assertItemsLeft(0);
     }
 
     @Test
@@ -57,7 +57,7 @@ public class TodosOperationsAtAllFilterTest extends BaseTest {
 
         toggleAll();
         assertTasksAre("a", "b", "c");
-        assertItemsLeft(0);
+        assertItemsLeft(3);
     }
 
     @Test
