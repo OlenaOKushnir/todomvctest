@@ -72,6 +72,11 @@ public class TodoMVC {
     }
 
     @Step
+    public static void assertTaskCompleted(String taskText) {
+        tasks.filter(cssClass("completed")).shouldHave(exactTexts(taskText));
+    }
+
+    @Step
     public static void assertNoTasks() {
         tasks.filter(visible).shouldBe(empty);
     }

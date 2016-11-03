@@ -13,6 +13,7 @@ public class TodosOperationsAtAllFilterTest extends BaseTest {
 
         add("a");
         assertTasksAre("a");
+        assertItemsLeft(1);
     }
 
     @Test
@@ -30,6 +31,7 @@ public class TodosOperationsAtAllFilterTest extends BaseTest {
 
         toggleAll();
         assertTasksAre("a");
+        assertItemsLeft(0);
     }
 
     @Test
@@ -55,6 +57,7 @@ public class TodosOperationsAtAllFilterTest extends BaseTest {
 
         toggleAll();
         assertTasksAre("a", "b", "c");
+        assertItemsLeft(3);
     }
 
     @Test
@@ -74,7 +77,7 @@ public class TodosOperationsAtAllFilterTest extends BaseTest {
 
         cancelEdit("a", "a edited");
         assertTasksAre("a", "b", "c");
-
+        assertItemsLeft(3);
     }
 
     @Test
@@ -93,6 +96,6 @@ public class TodosOperationsAtAllFilterTest extends BaseTest {
 
         editByPressTab("b", "b edited");
         assertTasksAre("a", "b edited");
-        assertItemsLeft(2);
+        assertItemsLeft(1);
     }
 }

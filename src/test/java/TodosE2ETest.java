@@ -16,11 +16,13 @@ public class TodosE2ETest extends BaseTest {
         assertTasksAre("a");
 
         switchToActive();
-        
+
+        assertNoTasks();
         add("b");
         assertTasksAre("b");
 
         toggleAll();
+        assertNoTasks();
 
         switchToCompleted();
 
@@ -32,11 +34,13 @@ public class TodosE2ETest extends BaseTest {
         assertTasksAre("b");
 
         clearCompleted();
+        assertNoTasks();
 
         switchToAll();
 
         assertTasksAre("a");
 
         delete("a");
+        assertNoTasks();
     }
 }
