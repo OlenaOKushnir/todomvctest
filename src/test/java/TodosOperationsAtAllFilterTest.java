@@ -96,6 +96,6 @@ public class TodosOperationsAtAllFilterTest extends BaseTest {
 
         editByPressTab("b", "b edited");
         assertTasksAre("a", "b edited");
-        assertItemsLeft(1);
+        assertItemsLeft(2);
     }
 }
