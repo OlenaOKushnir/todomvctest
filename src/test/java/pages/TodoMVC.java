@@ -10,13 +10,14 @@ import java.util.List;
 
 import static com.codeborne.selenide.CollectionCondition.empty;
 import static com.codeborne.selenide.CollectionCondition.exactTexts;
+import static com.codeborne.selenide.CollectionCondition.size;
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.*;
 import static com.codeborne.selenide.WebDriverRunner.url;
 
 public class TodoMVC {
 
-    public static ElementsCollection tasks = $$("#todo-list>li");
+    public static ElementsCollection tasksCollection = $$("#todo-list>li");
     public static SelenideElement addTasks = $("#new-todo");
 
     @Step
@@ -32,12 +33,12 @@ public class TodoMVC {
 
     @Step
     public static void assertTasksAre(String... taskTexts) {
-        tasks.filter(visible).shouldHave(exactTexts(taskTexts));
+        tasksCollection.filter(visible).shouldHave(exactTexts(taskTexts));
     }
 
     public static SelenideElement startEditing(String oldTaskText, String newTaskText) {
-        tasks.find(exactText(oldTaskText)).doubleClick();
-        return tasks.find(cssClass("editing")).find(".edit").setValue(newTaskText);
+        tasksCollection.find(exactText(oldTaskText)).doubleClick();
+        return tasksCollection.find(cssClass("editing")).find(".edit").setValue(newTaskText);
     }
 
     @Step
@@ -63,22 +64,22 @@ public class TodoMVC {
 
     @Step
     public static void delete(String taskText) {
-        tasks.find(exactText(taskText)).hover().$(".destroy").click();
+        tasksCollection.find(exactText(taskText)).hover().$(".destroy").click();
     }
 
     @Step
     public static void toggle(String taskText) {
-        tasks.find(exactText(taskText)).$(".toggle").click();
+        tasksCollection.find(exactText(taskText)).$(".toggle").click();
     }
 
     @Step
     public static void assertTaskCompleted(String taskText) {
-        tasks.filter(cssClass("completed")).shouldHave(exactTexts(taskText));
+        tasksCollection.filter(cssClass("completed")).shouldHave(exactTexts(taskText));
     }
 
     @Step
     public static void assertNoTasks() {
-        tasks.filter(visible).shouldBe(empty);
+        tasksCollection.filter(visible).shouldBe(empty);
     }
 
     @Step
@@ -117,6 +118,7 @@ public class TodoMVC {
         TaskType(String taskTypeString) {
             this.taskTypeString = taskTypeString;
         }
+
         @Override
         public String toString() {
             return taskTypeString;
@@ -124,7 +126,7 @@ public class TodoMVC {
     }
 
     public static void given(Filter filter, Task... tasks) {
-        ensureUrlOpened(Filter.ALL);
+        ensureUrlOpened(filter);
         addTasks.shouldBe(enabled);
         List<String> storageText = new ArrayList<String>();
         for (Task task : tasks) {
@@ -133,8 +135,8 @@ public class TodoMVC {
         String storageString = "localStorage.setItem(\"todos-troopjs\", \"[" + String.join(", ", storageText) + "]\")";
         executeJavaScript(storageString);
         executeJavaScript("location.reload()");
-        ensureUrlOpened(filter);
         addTasks.shouldBe(enabled);
+        tasksCollection.shouldHave(size(tasks.length));
     }
 
     public enum Filter {
